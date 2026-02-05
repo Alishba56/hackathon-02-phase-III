@@ -1,0 +1,206 @@
+# API Contracts: Modern & Best-in-Class Frontend UI
+
+## Authentication Endpoints
+
+### POST /api/auth/login
+Authenticate user and return JWT token
+
+**Request**:
+```json
+{
+  "email": "user@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response (200)**:
+```json
+{
+  "user": {
+    "id": "uuid-string",
+    "email": "user@example.com",
+    "name": "User Name"
+  },
+  "token": "jwt-token-string"
+}
+```
+
+**Response (401)**:
+```json
+{
+  "error": "Invalid credentials"
+}
+```
+
+### POST /api/auth/register
+Register new user and return JWT token
+
+**Request**:
+```json
+{
+  "email": "user@example.com",
+  "password": "securePassword123",
+  "name": "User Name"
+}
+```
+
+**Response (201)**:
+```json
+{
+  "user": {
+    "id": "uuid-string",
+    "email": "user@example.com",
+    "name": "User Name"
+  },
+  "token": "jwt-token-string"
+}
+```
+
+## Task Management Endpoints
+
+### GET /api/tasks
+Retrieve authenticated user's tasks
+
+**Headers**:
+```
+Authorization: Bearer {jwt_token}
+```
+
+**Response (200)**:
+```json
+{
+  "tasks": [
+    {
+      "id": "uuid-string",
+      "title": "Task title",
+      "description": "Task description",
+      "completed": false,
+      "dueDate": "2026-12-31T23:59:59Z",
+      "priority": "medium",
+      "userId": "user-uuid",
+      "createdAt": "2026-01-28T10:00:00Z",
+      "updatedAt": "2026-01-28T10:00:00Z"
+    }
+  ]
+}
+```
+
+### POST /api/tasks
+Create a new task for authenticated user
+
+**Headers**:
+```
+Authorization: Bearer {jwt_token}
+```
+
+**Request**:
+```json
+{
+  "title": "New task title",
+  "description": "Task description",
+  "dueDate": "2026-12-31T23:59:59Z",
+  "priority": "medium"
+}
+```
+
+**Response (201)**:
+```json
+{
+  "task": {
+    "id": "uuid-string",
+    "title": "New task title",
+    "description": "Task description",
+    "completed": false,
+    "dueDate": "2026-12-31T23:59:59Z",
+    "priority": "medium",
+    "userId": "user-uuid",
+    "createdAt": "2026-01-28T10:00:00Z",
+    "updatedAt": "2026-01-28T10:00:00Z"
+  }
+}
+```
+
+### PUT /api/tasks/{task_id}
+Update an existing task
+
+**Headers**:
+```
+Authorization: Bearer {jwt_token}
+```
+
+**Request**:
+```json
+{
+  "title": "Updated task title",
+  "description": "Updated description",
+  "completed": true,
+  "dueDate": "2026-12-31T23:59:59Z",
+  "priority": "high"
+}
+```
+
+**Response (200)**:
+```json
+{
+  "task": {
+    "id": "uuid-string",
+    "title": "Updated task title",
+    "description": "Updated description",
+    "completed": true,
+    "dueDate": "2026-12-31T23:59:59Z",
+    "priority": "high",
+    "userId": "user-uuid",
+    "createdAt": "2026-01-28T10:00:00Z",
+    "updatedAt": "2026-01-28T11:00:00Z"
+  }
+}
+```
+
+### DELETE /api/tasks/{task_id}
+Delete a task
+
+**Headers**:
+```
+Authorization: Bearer {jwt_token}
+```
+
+**Response (204)**: No content
+
+## Theme Settings Endpoint
+
+### GET /api/theme
+Get user's theme preference
+
+**Headers**:
+```
+Authorization: Bearer {jwt_token}
+```
+
+**Response (200)**:
+```json
+{
+  "theme": "light" // or "dark" or "system"
+}
+```
+
+### PUT /api/theme
+Update user's theme preference
+
+**Headers**:
+```
+Authorization: Bearer {jwt_token}
+```
+
+**Request**:
+```json
+{
+  "theme": "dark"
+}
+```
+
+**Response (200)**:
+```json
+{
+  "theme": "dark"
+}
+```
